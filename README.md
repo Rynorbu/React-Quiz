@@ -225,3 +225,74 @@ The following test cases can be used to validate the application functionality:
 - **Precondition**: Complete quiz with known correct/incorrect answers
 - **Steps**: Answer specific pattern of questions
 - **Expected**: Final score matches expected calculation (correct answers / total questions)
+
+
+**TC007: Timer Expiry**
+
+- **Precondition**: Quiz is playing, timer reaches 0
+- **Steps**: Let timer reach 0 without answering
+- **Expected**: Quiz ends automatically, final score shown
+
+### 3. Game State Tests
+
+**TC008: Restart Quiz**
+
+- **Precondition**: Quiz has ended (game over screen visible)
+- **Steps**: Click "Play Again" or restart button
+- **Expected**: Quiz resets to start state, score resets to 0, question index resets to 0
+
+**TC009: Question Navigation**
+
+- **Precondition**: Quiz is playing
+- **Steps**: Answer multiple questions in sequence
+- **Expected**: Question counter advances correctly, new questions appear
+
+### 4. UI/UX Tests
+
+**TC010: Responsive Design**
+
+- **Precondition**: Application loaded
+- **Steps**: Resize browser window or test on different devices
+- **Expected**: Layout adapts properly to different screen sizes
+
+**TC011: Visual Feedback**
+
+- **Precondition**: Quiz is playing
+- **Steps**: Select answers and observe visual changes
+- **Expected**: Selected answers show visual feedback, correct/incorrect states clearly indicated
+
+### 5. Edge Cases
+
+**TC012: Rapid Answer Selection**
+
+- **Precondition**: Quiz is playing
+- **Steps**: Quickly click multiple answer options before auto-advance
+- **Expected**: Only first selection is registered, prevents multiple selections
+
+**TC013: Browser Refresh**
+
+- **Precondition**: Quiz is in progress
+- **Steps**: Refresh the browser
+- **Expected**: Quiz resets to start state (no persistence expected)
+
+### 6. Data Validation Tests
+
+**TC014: Question Data Integrity**
+
+- **Precondition**: Application loaded
+- **Steps**: Navigate through all questions
+- **Expected**: All questions have 4 options, correct answer indices are valid (0-3)
+
+**TC015: Score Calculation**
+
+- **Precondition**: Complete quiz with known correct/incorrect answers
+- **Steps**: Answer specific pattern of questions
+- **Expected**: Final score matches expected calculation (correct answers / total questions)
+
+
+
+**TC015: Score Calculation**
+
+- **Precondition**: Complete quiz with known correct/incorrect answers
+- **Steps**: Answer specific pattern of questions
+- **Expected**: Final score matches expected calculation (correct answers / total questions)
