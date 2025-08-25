@@ -267,7 +267,7 @@ The following test cases can be used to validate the application functionality:
 
 - **Precondition**: Quiz is playing
 - **Steps**: Quickly click multiple answer options before auto-advance
-- **Expected**: Only first selection is registered, prevents multiple selections
+- **Expected**: Only first selection is registered, prevents multiple selection
 
 **TC013: Browser Refresh**
 
