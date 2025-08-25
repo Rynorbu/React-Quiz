@@ -150,8 +150,13 @@ test.describe("Data Validation Tests", () => {
     const timerText = await page.locator('[data-testid="timer"]').textContent();
     expect(timerText).toMatch(/\d+/);
 
-    // Verify timer decreases by 1 each second
-    await page.waitForTimeout(1000);
+    // Wait for timer to change from 30, then check value
+    await page.waitForFunction(() => {
+      const el = document.querySelector('[data-testid="timer"]');
+      if (!el) return false;
+      const match = el.textContent?.match(/\d+/);
+      return match && match[0] !== "30";
+    }, { timeout: 2000 });
     const newTimerText = await page
       .locator('[data-testid="timer"]')
       .textContent();
