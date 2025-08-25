@@ -4,9 +4,13 @@ interface TimerProps {
   timeLeft: number;
 }
 export default function Timer({ timeLeft }: TimerProps) {
+  // Add warning class if timeLeft is 10 or less
+  const timerClass =
+    "flex items-center justify-center space-x-2 text-2xl font-bold mb-8 " +
+    (timeLeft <= 10 ? "text-red-500 warning" : "text-gray-700");
   return (
     <div
-      className="flex items-center justify-center space-x-2 text-2xl font-bold text-gray-700 mb-8"
+      className={timerClass}
       data-testid="timer"
     >
       <TimerIcon className="w-6 h-6" />

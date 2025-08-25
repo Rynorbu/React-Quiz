@@ -7,6 +7,7 @@ interface QuestionCardProps {
   onAnswerSelect: (index: number) => void;
   totalQuestions: number;
   currentQuestion: number;
+  isProcessing?: boolean;
 }
 export default function QuestionCard({
   question,
@@ -14,11 +15,12 @@ export default function QuestionCard({
   onAnswerSelect,
   totalQuestions,
   currentQuestion,
+  isProcessing = false,
 }: QuestionCardProps) {
   const getButtonClass = (index: number): string => {
     if (selectedAnswer === null) return "hover:bg-gray-100";
-    if (index === question.correct) return "bg-green-100 border-green-500";
-    if (selectedAnswer === index) return "bg-red-100 border-red-500";
+    if (index === question.correct) return "correct selected bg-green-100 border-green-500";
+    if (selectedAnswer === index) return "selected bg-blue-100 border-blue-500";
     return "opacity-50";
   };
 
@@ -39,10 +41,11 @@ export default function QuestionCard({
           <button
             key={index}
             data-testid="answer-option"
-            onClick={() => selectedAnswer === null && onAnswerSelect(index)}
+            onClick={() => !isProcessing && selectedAnswer === null && onAnswerSelect(index)}
+            disabled={selectedAnswer !== null || isProcessing}
             className={`w-full p-4 text-left border rounded-lg transition-all duration-300 ${getButtonClass(
               index
-            )}`}
+            )} ${selectedAnswer !== null ? "opacity-50 cursor-not-allowed" : ""}`}
           >
             <div className="flex items-center justify-between">
               <span>{option}</span>
@@ -58,12 +61,13 @@ export default function QuestionCard({
       </div>
 
       {selectedAnswer !== null && (
-        <div className="mt-4 text-center" data-testid="feedback">
-          {selectedAnswer === question.correct ? (
-            <span className="text-green-600 font-semibold">Correct!</span>
-          ) : (
-            <span className="text-red-600 font-semibold">Incorrect!</span>
-          )}
+        <div
+          className={`mt-4 text-center font-semibold ${
+            selectedAnswer === question.correct ? "text-green-600" : "text-red-600"
+          }`}
+          data-testid="feedback"
+        >
+          {selectedAnswer === question.correct ? "Correct!" : "Incorrect!"}
         </div>
       )}
     </div>

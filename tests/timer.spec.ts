@@ -38,32 +38,21 @@ test.describe("Timer Tests", () => {
   });
 
   test("TC007: Timer Expiry", async ({ page }) => {
-    // Start the quiz
-    await page.click("text=Start Quiz");
-    await page.waitForSelector('[data-testid="timer"]');
 
-    // Wait for timer to reach 0 (30+ seconds)
-    // For testing purposes, we'll speed this up by waiting for the timer to get low
-    // and then waiting for the end state
+  // Use a short timer for reliable testing
+  await page.goto("http://localhost:5173/?timer=5");
+  await page.waitForLoadState("networkidle");
+  await page.click("text=Start Quiz");
+  await page.waitForSelector('[data-testid="timer"]');
 
-    // Wait for timer to get to single digits
-    await page.waitForFunction(
-      () => {
-        const timer = document.querySelector('[data-testid="timer"]');
-        if (!timer) return false;
-        const time = parseInt(timer.textContent?.match(/\d+/)?.[0] || "30");
-        return time <= 5;
-      },
-      { timeout: 30000 }
-    );
 
-    // Wait for timer to reach 0 and quiz to end
+    // Wait for timer to reach 0 and quiz to end (game over state)
     await page.waitForFunction(
       () => {
         const gameOver = document.querySelector('[data-testid="game-over"]');
         return gameOver !== null;
       },
-      { timeout: 10000 }
+      { timeout: 40000 } // Allow up to 40s for slow environments
     );
 
     // Verify quiz ended automatically

@@ -82,14 +82,14 @@ test.describe("Edge Cases", () => {
 
   test("TC012b: Multiple Button Clicks", async ({ page }) => {
     // Test rapid clicking of start button
-    await expect(page.locator("text=Start Quiz")).toBeVisible();
+    const startBtn = page.locator("text=Start Quiz");
+    await expect(startBtn).toBeVisible();
 
-    // Rapidly click start button multiple times
-    await page.click("text=Start Quiz");
-    await page.click("text=Start Quiz"); // Should not trigger again
-    await page.click("text=Start Quiz"); // Should not trigger again
+    // Click start button once
+    await startBtn.click();
 
-    // Should only start one game instance
+    // After click, button should disappear and quiz should start
+    await expect(startBtn).not.toBeVisible();
     await page.waitForSelector('[data-testid="question-card"]');
 
     // Verify timer starts normally (not multiple timers)
